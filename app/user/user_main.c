@@ -26,6 +26,8 @@
 #include "espconn.h"
 #include "sections.h"
 
+#include "fft/fft.h"
+
 #ifdef LUA_USE_MODULES_RTCTIME
 #include "rtc/rtctime.h"
 #endif
@@ -310,6 +312,38 @@ void user_rf_pre_init(void)
 }
 #endif
 
+/* static void ICACHE_RAM_ATTR timerInterruptHandler(os_param_t arg) {
+  pwm2_interrupt_handler_data_t *data = (pwm2_interrupt_handler_data_t *)arg;
+  setGpioPins(data->enabledGpioMask, findAllPinOns(data));
+} */
+
+/* uint8_t ICACHE_FLASH_ATTR timer_init()
+{
+
+
+bool platform_hw_timer_set_func(os_param_t owner, void (* user_hw_timer_cb_set)(os_param_t), os_param_t arg);
+NMI_SOURCE
+
+platform_hw_timer_init_exclusive(FRC1_SOURCE, TRUE, timerInterruptHandler, (os_param_t)&moduleData->interruptData, (void (*)(void))NULL))
+bool platform_hw_timer_init_exclusive(FRC1_TIMER_SOURCE_TYPE source_type, bool autoload, void (* frc1_timer_cb)(os_param_t), os_param_t arg, void (*nmi_timer_cb)(void) );
+platform_hw_timer_arm_ticks_exclusive(moduleData->setupData.interruptTimerTicks);
+bool ICACHE_RAM_ATTR platform_hw_timer_arm_us_exclusive(uint32_t microseconds);
+
+        return 0;
+} */
+
+/* uint8_t ICACHE_FLASH_ATTR adc_init()
+{
+        // configure adc
+
+        // start timer
+        if(!timer_init())
+        {
+                return 1;
+        }
+
+        return 0;
+} */
 
 /******************************************************************************
  * FunctionName : user_init
@@ -332,6 +366,20 @@ void user_init(void) {
     system_set_os_print(0);
 #endif
     system_init_done_cb(nodemcu_init);
+
+    // first test
+    os_printf("Running fft test..\n");
+    float data[1024] = { 0.0f };
+    uint32_t tick = system_get_time();
+    diffft2(data, 1024, -1);
+    os_printf("Time used: %u\n", (system_get_time() - tick));
+
+    // start sampling continuously
+/*     if(adc_init())
+    {
+        NODE_DBG("Can not init ADC sampling!.\n");
+        return;
+    } */
 }
 #if 0
 /*

@@ -66,7 +66,7 @@
 // LUA_FLASH_STORE defines the default partition size if the NodeMCU partition
 // tool is not used.
 
-//#define LUA_FLASH_STORE                   0x10000
+#define LUA_FLASH_STORE                   0x10000
 
 // By default Lua executes the file init.lua at start up.  The following
 // define allows you to replace this with an alternative startup.  Warning:
@@ -215,10 +215,10 @@
 // directory basis. If you do this then you can also set the corresponding
 // compile options (-O0 -ggdb) on a per directory as well.
 
-//#define DEVELOPMENT_TOOLS
-//#define DEVELOPMENT_USE_GDB
-//#define DEVELOPMENT_BREAK_ON_STARTUP_PIN 1
-//#define DEVELOP_VERSION
+#define DEVELOPMENT_TOOLS
+#define DEVELOPMENT_USE_GDB
+#define DEVELOPMENT_BREAK_ON_STARTUP_PIN 1
+#define DEVELOP_VERSION
 
 
 // *** Heareafter, there be demons ***
